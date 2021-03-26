@@ -1,3 +1,6 @@
+drop database vconf;
+create database vconf;
+use vconf;
 create table admins (
     AdminId integer primary key auto_increment,
     firstName varchar(20),
@@ -43,22 +46,82 @@ values(
         'test',
         '123456789'
     );
-create table Orders (
+create table segments (
+    segmentId integer primary key auto_increment,
+    segmentName varchar(30)
+);
+create table manufacturers (
+    manufacturerId integer primary key auto_increment,
+    manufacturerName varchar(30),
+    segmentId integer,
+    FOREIGN KEY (segmentId) REFERENCES segments (segmentId)
+);
+create table variants (
+    variantId integer primary key auto_increment,
+    variantName varchar(30),
+    unitPrice decimal(10, 2),
+    manufacturerId integer,
+    segmentId integer,
+    FOREIGN KEY (segmentId) REFERENCES segments (segmentId),
+    FOREIGN KEY (manufacturerId) REFERENCES manufacturers (manufacturerId)
+);
+create table orders (
     orderId integer primary key auto_increment,
-    integer,
+    userId integer,
     placedOn date,
-    orderState integer default 1,
+    orderState ENUM(
+        'PLACED',
+        'IN-PROCESS',
+        'DISPATCHED',
+        'DILIVERED',
+        'CANCELLED'
+    ),
     orderComments varchar(1024),
-    totalAmount float,
-    addressId integer,
-    created_on timestamp default CURRENT_TIMESTAMP
+    Amount float,
+    created_on timestamp default CURRENT_TIMESTAMP,
+    FOREIGN KEY (userId) REFERENCES users(userId)
 );
-create table userOrderDetails (
-    id integer primary key auto_increment,
+alter table orders AUTO_INCREMENT = 10001;
+create table orderDetails (
+    orderDetailsId integer primary key auto_increment,
     orderId integer,
-    productId integer,
-    price float,
-    quantity float,
-    totalAmount float,
-    created_on timestamp default CURRENT_TIMESTAMP
+    userId integer,
+    varientId integer,
+    unitPrice DECIMAL(10, 2),
+    quantity integer,
+    tax float,
+    totalAmount decimal(10, 2),
+    orderDate timestamp,
+    orderTime timestamp,
+    FOREIGN KEY (orderId) REFERENCES orders(orderId),
+    FOREIGN KEY (userId) REFERENCES users(userId),
+    FOREIGN KEY (varientId) REFERENCES variants(variantId)
 );
+DELIMITER $$ CREATE PROCEDURE `addVehicles`(
+    IN segment_name varchar(30),
+    IN manufacturer_name varchar(30),
+    IN variant_name varchar(30),
+    IN unit_price decimal(10, 2)
+) BEGIN IF getSegmentId(segment_name) IS NULL THEN
+insert into segments (segmentName)
+values(segment_name);
+END IF;
+IF getManufacturerId(manufacturer_name) IS NULL THEN
+insert into manufacturers (manufacturerName, segmentId)
+values(manufacturer_name, getSegmentId(segment_name));
+END IF;
+IF getVariantId(variant_name) IS NULL THEN
+insert into variants (
+        variantName,
+        unitPrice,
+        manufacturerId,
+        segmentId
+    )
+values(
+        variant_name,
+        unit_price,
+        getManufacturerId(manufacturer_name),
+        getSegmentId(segment_name)
+    );
+END IF;
+END $$ DELIMITER;
