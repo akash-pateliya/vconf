@@ -1,9 +1,6 @@
 const express = require("express");
 const db = require("../../database");
 const utils = require("../../utils");
-const crypto = require("crypto-js");
-const jwt = require("jsonwebtoken");
-const config = require("../../config");
 
 const router = express.Router();
 
@@ -15,7 +12,6 @@ router.get("/", (request, response) => {
         response.send(utils.createResult(error, data));
     });
 });
-
 
 router.put("/change-status/:id", (request, response) => {
     const id = request.params;
