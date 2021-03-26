@@ -1,5 +1,5 @@
 create table admins (
-    AdminID integer primary key auto_increment,
+    AdminId integer primary key auto_increment,
     firstName varchar(20),
     lastName varchar(20),
     email varchar(50),
@@ -16,7 +16,7 @@ values (
         '+123456789'
     );
 create table users (
-    userID integer primary key auto_increment,
+    userId integer primary key auto_increment,
     companyName varchar(50),
     companyAddress varchar(250),
     email varchar(50),
@@ -43,3 +43,22 @@ values(
         'test',
         '123456789'
     );
+create table Orders (
+    orderId integer primary key auto_increment,
+    integer,
+    placedOn date,
+    orderState integer default 1,
+    orderComments varchar(1024),
+    totalAmount float,
+    addressId integer,
+    created_on timestamp default CURRENT_TIMESTAMP
+);
+create table userOrderDetails (
+    id integer primary key auto_increment,
+    orderId integer,
+    productId integer,
+    price float,
+    quantity float,
+    totalAmount float,
+    created_on timestamp default CURRENT_TIMESTAMP
+);

@@ -16,7 +16,7 @@ router.get("/", (request, response) => {
 router.put("/change-status/:id", (request, response) => {
     const id = request.params;
     const { status } = request.body;
-    const statement = `update users set status = '${status}' where userID = ${id}`;
+    const statement = `update users set status = '${status}' where userId = ${id}`;
 
     db.query(statement, (error, data) => {
         response.send(utils.createResult(error, data));
