@@ -1,1 +1,21 @@
-<p>vehicles-list works!</p>
+<h3 class="header">Vehicles List</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>No.</th>
+            <th>Segment</th>
+            <th>Manufacturer</th>
+            <th>Variant</th>
+            <th>Unit Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let vehicle of vehicles; let i=index">
+            <td>{{ i+1 }}</td>
+            <td>{{ vehicle.segmentName }}</td>
+            <td>{{ vehicle.manufacturerName }}</td>
+            <td>{{ vehicle.variantName }}</td>
+            <td>{{ vehicle.unitPrice }}</td>
+        </tr>
+    </tbody>
+</table>
