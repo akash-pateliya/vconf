@@ -77,7 +77,7 @@ create table orders (
         'CANCELLED'
     ),
     orderComments varchar(1024),
-    Amount float,
+    totalAmount decimal(10, 2),
     created_on timestamp default CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
