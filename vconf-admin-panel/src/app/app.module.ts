@@ -12,6 +12,9 @@ import { UsersListComponent } from './users/users-list/users-list.component';
 import { OrdersListComponent } from './orders/orders-list/orders-list.component';
 import { VehicleAddComponent } from './vehicles/vehicle-add/vehicle-add.component';
 import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.component';
+import { HeaderComponent } from './admin/header/header.component';
+import { FooterComponent } from './admin/footer/footer.component';
+
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.co
     UsersListComponent,
     OrdersListComponent,
     VehicleAddComponent,
-    VehiclesListComponent
+    VehiclesListComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,7 @@ import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.co
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ToastrModule
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent]
