@@ -68,7 +68,6 @@ create table variants (
 create table orders (
     orderId integer primary key auto_increment,
     userId integer,
-    placedOn date,
     orderState ENUM(
         'PLACED',
         'IN-PROCESS',
@@ -76,27 +75,64 @@ create table orders (
         'DILIVERED',
         'CANCELLED'
     ),
-    orderComments varchar(1024),
-    totalAmount decimal(10, 2),
-    created_on timestamp default CURRENT_TIMESTAMP,
+    orderComments varchar(250),
+    createdOn timestamp default CURRENT_TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES users(userId)
 );
 alter table orders AUTO_INCREMENT = 10001;
+insert into orders(userId, orderState, orderComments)
+values (1001, 'PLACED', 'please try to ship asap !');
 create table orderDetails (
     orderDetailsId integer primary key auto_increment,
     orderId integer,
-    userId integer,
-    varientId integer,
+    variantId integer,
     unitPrice DECIMAL(10, 2),
     quantity integer,
     tax float,
     totalAmount decimal(10, 2),
-    orderDate timestamp,
-    orderTime timestamp,
+    orderDate date,
+    orderTime time,
     FOREIGN KEY (orderId) REFERENCES orders(orderId),
-    FOREIGN KEY (userId) REFERENCES users(userId),
-    FOREIGN KEY (varientId) REFERENCES variants(variantId)
+    FOREIGN KEY (variantId) REFERENCES variants(variantId)
 );
+INSERT INTO orderDetails (
+        orderId,
+        variantId,
+        unitPrice,
+        quantity,
+        tax,
+        totalAmount,
+        orderDate,
+        orderTime
+    )
+values (
+        10001,
+        7,
+        5050,
+        5,
+        18.8,
+        20000,
+        curdate(),
+        curtime()
+    );
+-- Get order details
+SELECT A.orderId,
+    C.username,
+    D.variantName,
+    B.unitPrice,
+    B.quantity,
+    B.tax,
+    B.totalAmount,
+    B.orderDate,
+    B.orderTime
+FROM orders A,
+    orderDetails B,
+    users C,
+    variants D
+where A.orderId = B.orderId
+    and A.userId = C.userId
+    and D.variantId = B.variantId
+    and B.orderId = 10001;
 DELIMITER $$ CREATE PROCEDURE `addVehicles`(
     IN segment_name varchar(30),
     IN manufacturer_name varchar(30),
