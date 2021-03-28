@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { VehicleAddComponent } from '../vehicle-add/vehicle-add.component';
 import { VehiclesService } from '../vehicles.service';
 
 @Component({
@@ -11,7 +13,7 @@ export class VehiclesListComponent implements OnInit {
 
   vehicles = [];
 
-  constructor(private service: VehiclesService, private toastr: ToastrService) { }
+  constructor(private service: VehiclesService, private toastr: ToastrService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.loadVehicles();
@@ -25,6 +27,15 @@ export class VehiclesListComponent implements OnInit {
       else {
         this.toastr.error(response['error']);
       }
+    })
+  }
+
+  onAdd() {
+    const modalRef = this.modalService.open(VehicleAddComponent);
+
+    modalRef.result.finally(() => {
+      // reload the categories
+      this.loadVehicles();
     })
   }
 
