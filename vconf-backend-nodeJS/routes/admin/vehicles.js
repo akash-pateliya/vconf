@@ -27,5 +27,14 @@ router.post("/add-vehicle", (request, response) => {
     });
 })
 
+router.delete("/:variantName", (request, response) => {
+    const name = request.params.variantName;
+    const statement = `delete from variants where variantName='${name}'`;
+
+    db.query(statement, (error, data) => {
+        response.send(utils.createResult(error, data));
+    })
+})
+
 
 module.exports = router;

@@ -9,6 +9,7 @@
             <th>Manufacturer</th>
             <th>Variant</th>
             <th>Unit Price</th>
+            <th style="width: 140px">Action</th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,12 @@
             <td>{{ vehicle.manufacturerName }}</td>
             <td>{{ vehicle.variantName }}</td>
             <td> ₹ {{ vehicle.unitPrice }}</td>
+            <td>
+                <button (click)="onEdit(vehicle)" class="btn btn-sm btn-warning">Edit</button>
+                <button class="btn btn-sm btn-danger" mwlConfirmationPopover [popoverTitle]="popoverTitle"
+                    [popoverMessage]="popoverMessage" placement="left" (confirm)="onDelete(vehicle)"
+                    (cancel)="cancelClicked = true" style="margin-left: 10px;">delete</button>
+            </td>
         </tr>
     </tbody>
 </table>

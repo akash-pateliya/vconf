@@ -10,7 +10,7 @@ export class VehiclesService {
 
   constructor(private http: HttpClient) { }
 
-  getUsVehicles() {
+  getVehicles() {
 
     // send the token along with the request
     const httpOptions = {
@@ -38,5 +38,16 @@ export class VehiclesService {
     }
 
     return this.http.post(this.url + '/add-vehicle', body, httpOptions);
+  }
+
+  deleteVehicle(variantName: string) {
+    // send the token along with the request
+    const httpOptions = {
+      headers: new HttpHeaders({
+        token: sessionStorage['token']
+      })
+    }
+
+    return this.http.delete(this.url + '/' + variantName, httpOptions);
   }
 }

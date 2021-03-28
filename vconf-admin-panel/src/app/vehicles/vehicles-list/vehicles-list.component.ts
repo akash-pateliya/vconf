@@ -11,6 +11,9 @@ import { VehiclesService } from '../vehicles.service';
 })
 export class VehiclesListComponent implements OnInit {
 
+  popoverTitle = 'Delete Confirmation';
+  popoverMessage = 'Are you sure you want to Delete this record !!!';
+  confirmClicked = false;
   vehicles = [];
 
   constructor(private service: VehiclesService, private toastr: ToastrService, private modalService: NgbModal) { }
@@ -20,7 +23,7 @@ export class VehiclesListComponent implements OnInit {
   }
 
   loadVehicles() {
-    this.service.getUsVehicles().subscribe(response => {
+    this.service.getVehicles().subscribe(response => {
       if (response['status'] = 'success') {
         this.vehicles = response['data'];
       }
@@ -36,6 +39,21 @@ export class VehiclesListComponent implements OnInit {
     modalRef.result.finally(() => {
       // reload the categories
       this.loadVehicles();
+    })
+  }
+
+  onEdit(vehicle) {
+
+  }
+
+  onDelete(vehicle) {
+    this.service.deleteVehicle(vehicle['variantName']).subscribe(response => {
+      if (response['status'] = 'success') {
+        this.toastr.success('Deleted !!!');
+        this.loadVehicles();
+      } else {
+        this.toastr.error(response['error']);
+      }
     })
   }
 
