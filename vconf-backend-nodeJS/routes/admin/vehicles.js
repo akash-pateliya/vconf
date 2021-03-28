@@ -35,6 +35,4 @@ router.delete("/:variantName", (request, response) => {
         response.send(utils.createResult(error, data));
     })
 })
-
-
 module.exports = router;

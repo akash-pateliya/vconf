@@ -16,6 +16,7 @@ import { VehicleAddComponent } from './vehicles/vehicle-add/vehicle-add.componen
 import { VehiclesListComponent } from './vehicles/vehicles-list/vehicles-list.component';
 import { HeaderComponent } from './admin/header/header.component';
 import { FooterComponent } from './admin/footer/footer.component';
+import { VehicleEditComponent } from './vehicles/vehicle-edit/vehicle-edit.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FooterComponent } from './admin/footer/footer.component';
     VehicleAddComponent,
     VehiclesListComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    VehicleEditComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { VehicleAddComponent } from '../vehicle-add/vehicle-add.component';
+import { VehicleEditComponent } from '../vehicle-edit/vehicle-edit.component';
 import { VehiclesService } from '../vehicles.service';
 
 @Component({
@@ -42,9 +43,20 @@ export class VehiclesListComponent implements OnInit {
     })
   }
 
-  onEdit(vehicle) {
+  // onEdit(vehicle) {
+  //   const modalRef = this.modalService.open(VehicleEditComponent);
+  //   const component = modalRef.componentInstance as VehicleEditComponent;
 
-  }
+  //   component.segmentName = vehicle.segmentName;
+  //   component.manufacturerName = vehicle.manufacturerName;
+  //   component.variantName = vehicle.variantName;
+  //   component.unitPrice = vehicle.unitPrice;
+
+  //   modalRef.result.finally(() => {
+  //     // reload the categories
+  //     this.loadVehicles();
+  //   })
+  // }
 
   onDelete(vehicle) {
     this.service.deleteVehicle(vehicle['variantName']).subscribe(response => {

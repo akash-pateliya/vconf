@@ -1,0 +1,33 @@
+<div class="modal-header">
+    <h3>Edit Vehicle</h3>
+</div>
+<div class="modal-body">
+    <div class="form">
+        <div class="form-group">
+            <label>Segment Name</label>
+            <input [(ngModel)]="segmentName" type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form">
+        <div class="form-group">
+            <label>Manufacturer Name</label>
+            <input [(ngModel)]="manufacturerName" type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form">
+        <div class="form-group">
+            <label>Variant Name</label>
+            <input [(ngModel)]="variantName" type="text" class="form-control">
+        </div>
+    </div>
+    <div class="form">
+        <div class="form-group">
+            <label>Unit Price</label>
+            <input [(ngModel)]="unitPrice" type="number" class="form-control">
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button (click)="onUpdate()" class="btn btn-success">Update Vehicle</button>
+    <button (click)="onCancel()" class="btn btn-danger float-right">Cancel</button>
+</div>

@@ -50,4 +50,22 @@ export class VehiclesService {
 
     return this.http.delete(this.url + '/' + variantName, httpOptions);
   }
+
+  // updateVehicle(segmentName: string, manufacturerName: string, variantName: string, unitPrice: number) {
+  //   const body = {
+  //     segmentName: segmentName,
+  //     manufacturerName: manufacturerName,
+  //     variantName: variantName,
+  //     unitPrice: unitPrice
+  //   }
+
+  //   // send the token along with the request
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       token: sessionStorage['token']
+  //     })
+  //   }
+
+  //   return this.http.put(this.url, body, httpOptions);
+  // }
 }
