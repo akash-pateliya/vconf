@@ -35,7 +35,7 @@ export class VehiclesListComponent implements OnInit {
   }
 
   onAdd() {
-    const modalRef = this.modalService.open(VehicleAddComponent);
+    const modalRef = this.modalService.open(VehicleAddComponent, { size: 'lg' });
 
     modalRef.result.finally(() => {
       // reload the categories

@@ -5,13 +5,18 @@
     <div class="form">
         <div class="form-group">
             <label>Segment Name</label>
-            <input [(ngModel)]="segmentName" type="text" class="form-control">
+            <select [(ngModel)]="segmentName" class="form-control">
+                <option [value]="segment.segmentName" *ngFor="let segment of segments">{{segment.segmentName}}</option>
+            </select>
         </div>
     </div>
     <div class="form">
         <div class="form-group">
             <label>Manufacturer Name</label>
-            <input [(ngModel)]="manufacturerName" type="text" class="form-control">
+            <select [(ngModel)]="manufacturerName" class="form-control">
+                <option [value]="manufacturer.manufacturerName" *ngFor="let manufacturer of manufacturers">
+                    {{manufacturer.manufacturerName}}</option>
+            </select>
         </div>
     </div>
     <div class="form">
@@ -24,6 +29,12 @@
         <div class="form-group">
             <label>Unit Price</label>
             <input [(ngModel)]="unitPrice" type="number" class="form-control">
+        </div>
+    </div>
+    <div class="form">
+        <div class="form-group">
+            <label>Select Vehicle Image</label>
+            <input (change)="onImageSelect($event)" type="file" class="form-control" accept="image/*">
         </div>
     </div>
 </div>

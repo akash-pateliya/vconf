@@ -22,13 +22,35 @@ export class VehiclesService {
     return this.http.get(this.url, httpOptions);
   }
 
-  addVehicle(segmentName: string, manufacturerName: string, variantName: string, unitPrice: number) {
-    const body = {
-      segmentName: segmentName,
-      manufacturerName: manufacturerName,
-      variantName: variantName,
-      unitPrice: unitPrice
+  getSegments() {
+    // send the token along with the request
+    const httpOptions = {
+      headers: new HttpHeaders({
+        token: sessionStorage['token']
+      })
     }
+
+    return this.http.get(this.url + '/getSegments', httpOptions);
+  }
+
+  getManufacturers() {
+    // send the token along with the request
+    const httpOptions = {
+      headers: new HttpHeaders({
+        token: sessionStorage['token']
+      })
+    }
+
+    return this.http.get(this.url + '/getManufacturers', httpOptions);
+  }
+
+  addVehicle(segmentName: string, manufacturerName: string, variantName: string, unitPrice: number, image: any) {
+    const body = new FormData();
+    body.append("segmentName", segmentName);
+    body.append("manufacturerName", manufacturerName);
+    body.append("variantName", variantName);
+    body.append("unitPrice", '' + unitPrice);
+    body.append("image", image);
 
     // send the token along with the request
     const httpOptions = {

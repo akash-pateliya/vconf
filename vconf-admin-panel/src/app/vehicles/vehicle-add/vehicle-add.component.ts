@@ -10,14 +10,42 @@ import { VehiclesService } from '../vehicles.service';
 })
 export class VehicleAddComponent implements OnInit {
 
+  segments = [];
+  manufacturers = [];
+
   segmentName: ''
   manufacturerName: ''
   variantName: ''
   unitPrice: 0
+  image: undefined;
 
   constructor(private activeModal: NgbActiveModal, private toastr: ToastrService, private service: VehiclesService) { }
 
   ngOnInit(): void {
+    this.loadSegments();
+    this.loadManufacturers();
+  }
+
+  loadSegments() {
+    this.service.getSegments().subscribe(response => {
+      if (response['status'] = 'success') {
+        this.segments = response['data'];
+      }
+      else {
+        this.toastr.error(response['error']);
+      }
+    })
+  }
+
+  loadManufacturers() {
+    this.service.getManufacturers().subscribe(response => {
+      if (response['status'] = 'success') {
+        this.manufacturers = response['data'];
+      }
+      else {
+        this.toastr.error(response['error']);
+      }
+    })
   }
 
   onAdd() {
@@ -34,7 +62,7 @@ export class VehicleAddComponent implements OnInit {
       this.toastr.warning("PLease enter Unit Price");
     }
     else {
-      this.service.addVehicle(this.segmentName, this.manufacturerName, this.variantName, this.unitPrice).subscribe(response => {
+      this.service.addVehicle(this.segmentName, this.manufacturerName, this.variantName, this.unitPrice, this.image).subscribe(response => {
         if (response['status'] == 'success') {
           this.toastr.success("Added Successfully !!");
           this.activeModal.dismiss('ok');
@@ -48,5 +76,9 @@ export class VehicleAddComponent implements OnInit {
 
   onCancel() {
     this.activeModal.dismiss('cancel');
+  }
+
+  onImageSelect(event) {
+    this.image = event.target.files[0];
   }
 }

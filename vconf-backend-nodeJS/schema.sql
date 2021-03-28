@@ -62,6 +62,7 @@ create table variants (
     unitPrice decimal(10, 2),
     manufacturerId integer,
     segmentId integer,
+    imageName varchar(250),
     FOREIGN KEY (segmentId) REFERENCES segments (segmentId),
     FOREIGN KEY (manufacturerId) REFERENCES manufacturers (manufacturerId)
 );
@@ -97,7 +98,6 @@ create table orderDetails (
 );
 INSERT INTO orderDetails (
         orderId,
-        variantId,
         unitPrice,
         quantity,
         tax,
@@ -107,7 +107,6 @@ INSERT INTO orderDetails (
     )
 values (
         10001,
-        7,
         5050,
         5,
         18.8,
@@ -133,11 +132,12 @@ where A.orderId = B.orderId
     and A.userId = C.userId
     and D.variantId = B.variantId
     and B.orderId = 10001;
-DELIMITER $$ CREATE PROCEDURE `addVehicles`(
+DELIMITER $$ CREATE PROCEDURE `addVehicle`(
     IN segment_name varchar(30),
     IN manufacturer_name varchar(30),
     IN variant_name varchar(30),
-    IN unit_price decimal(10, 2)
+    IN unit_price decimal(10, 2),
+    IN image_name varchar(250)
 ) BEGIN IF getSegmentId(segment_name) IS NULL THEN
 insert into segments (segmentName)
 values(segment_name);
@@ -151,13 +151,15 @@ insert into variants (
         variantName,
         unitPrice,
         manufacturerId,
-        segmentId
+        segmentId,
+        imageName
     )
 values(
         variant_name,
         unit_price,
         getManufacturerId(manufacturer_name),
-        getSegmentId(segment_name)
+        getSegmentId(segment_name),
+        image_name
     );
 END IF;
 END $$ DELIMITER;
