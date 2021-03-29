@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthService } from './auth/auth.service';
 import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
@@ -11,7 +12,8 @@ const routes: Routes = [
       { path: 'order', loadChildren: () => import("./order/order.module").then(m => m.OrderModule) },
       { path: 'user', loadChildren: () => import("./user/user.module").then(m => m.UserModule) },
       { path: 'vehicle', loadChildren: () => import("./vehicle/vehicle.module").then(m => m.VehicleModule) }
-    ]
+    ],
+    canActivate: [AuthService]
   },
   { path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule) }
 ];

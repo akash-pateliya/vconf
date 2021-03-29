@@ -9,7 +9,7 @@ const router = express.Router();
 router.post("/signin", (request, response) => {
   const { email, password } = request.body;
   const encryptedPassword = crypto.SHA256(password);
-  const statement = `select AdminID, firstName, lastName from admins where email = '${email}' and password = '${encryptedPassword}'`;
+  const statement = `select AdminId, firstName, lastName from admins where email = '${email}' and password = '${encryptedPassword}'`;
 
   db.query(statement, (error, data) => {
     const result = {};
@@ -22,7 +22,7 @@ router.post("/signin", (request, response) => {
           (result["error"] = "Invalid Email or Password !!");
       } else {
         const user = data[0];
-        const token = jwt.sign({ id: user["AdminID"] }, config.secret);
+        const token = jwt.sign({ id: user["AdminId"] }, config.secret);
         result["status"] = "success";
         result["data"] = {
           name: user["firstName"] + " " + user["lastName"],

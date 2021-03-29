@@ -10,7 +10,7 @@ const config = require("./config");
 function authorizeUser(request, response, next) {
   // token will not be available for signin, signup and activate urls
   if (
-    request.url == "/admin/signin" ||
+    request.url == "/admin/signin" || request.url == "/user/signin" || request.url == "/user/signup" ||
     request.url.startsWith("/vehicles/image")
   ) {
     // no token is required for these APIs

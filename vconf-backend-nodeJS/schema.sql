@@ -2,7 +2,7 @@ drop database vconf;
 create database vconf;
 use vconf;
 create table admins (
-    AdminId integer primary key auto_increment,
+    adminId integer primary key auto_increment,
     firstName varchar(20),
     lastName varchar(20),
     email varchar(50),
