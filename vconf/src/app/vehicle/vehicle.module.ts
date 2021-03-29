@@ -4,11 +4,11 @@ import { CommonModule } from '@angular/common';
 import { VehicleRoutingModule } from './vehicle-routing.module';
 import { SelectVehicleComponent } from './select-vehicle/select-vehicle.component';
 import { ConfigureVehicleComponent } from './configure-vehicle/configure-vehicle.component';
-import { DefaultFeaturesComponent } from './default-features/default-features.component';
+import { StandardFeaturesComponent } from './standard-features/standard-features.component';
 
 
 @NgModule({
-  declarations: [SelectVehicleComponent, ConfigureVehicleComponent, DefaultFeaturesComponent],
+  declarations: [SelectVehicleComponent, ConfigureVehicleComponent, StandardFeaturesComponent],
   imports: [
     CommonModule,
     VehicleRoutingModule
