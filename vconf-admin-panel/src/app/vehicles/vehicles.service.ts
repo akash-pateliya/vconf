@@ -33,7 +33,7 @@ export class VehiclesService {
     return this.http.get(this.url + '/getSegments', httpOptions);
   }
 
-  getManufacturers() {
+  getManufacturers(name: string) {
     // send the token along with the request
     const httpOptions = {
       headers: new HttpHeaders({
@@ -41,7 +41,7 @@ export class VehiclesService {
       })
     }
 
-    return this.http.get(this.url + '/getManufacturers', httpOptions);
+    return this.http.get(this.url + '/getManufacturers/'+ name, httpOptions);
   }
 
   addVehicle(segmentName: string, manufacturerName: string, variantName: string, unitPrice: number, image: any) {
@@ -58,7 +58,6 @@ export class VehiclesService {
         token: sessionStorage['token']
       })
     }
-
     return this.http.post(this.url + '/add-vehicle', body, httpOptions);
   }
 

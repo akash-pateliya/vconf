@@ -50,12 +50,30 @@ create table segments (
     segmentId integer primary key auto_increment,
     segmentName varchar(30)
 );
+INSERT INTO `vconf`.`segments` (`segmentName`) VALUES ('Small Car');
+INSERT INTO `vconf`.`segments` (`segmentName`) VALUES ('Compact Car');
+INSERT INTO `vconf`.`segments` (`segmentName`) VALUES ('Sedan');
+INSERT INTO `vconf`.`segments` (`segmentName`) VALUES ('SUV');
+INSERT INTO `vconf`.`segments` (`segmentName`) VALUES ('Luxury Car');
 create table manufacturers (
     manufacturerId integer primary key auto_increment,
     manufacturerName varchar(30),
     segmentId integer,
     FOREIGN KEY (segmentId) REFERENCES segments (segmentId)
 );
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Maruti Suzuki', '1');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Maruti Suzuki', '2');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Renault', '1');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Renault', '2');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Tata', '1');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Tata', '2');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Hyundai', '1');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Hyundai', '2');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Ford', '1');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Ford', '2');
+INSERT INTO `vconf`.`manufacturers` (`manufacturerName`, `segmentId`) VALUES ('Toyota', '2');
+
+
 create table variants (
     variantId integer primary key auto_increment,
     variantName varchar(30),
@@ -96,24 +114,7 @@ create table orderDetails (
     FOREIGN KEY (orderId) REFERENCES orders(orderId),
     FOREIGN KEY (variantId) REFERENCES variants(variantId)
 );
-INSERT INTO orderDetails (
-        orderId,
-        unitPrice,
-        quantity,
-        tax,
-        totalAmount,
-        orderDate,
-        orderTime
-    )
-values (
-        10001,
-        5050,
-        5,
-        18.8,
-        20000,
-        curdate(),
-        curtime()
-    );
+
 -- Get order details
 SELECT A.orderId,
     C.username,
@@ -132,7 +133,42 @@ where A.orderId = B.orderId
     and A.userId = C.userId
     and D.variantId = B.variantId
     and B.orderId = 10001;
-DELIMITER $$ CREATE PROCEDURE `addVehicle`(
+
+delimiter //
+CREATE FUNCTION getSegmentId(segment_name varchar(30)) returns int
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE ID int;
+    select segmentId into ID from segments where segmentName = segment_name;
+    return ID;
+END //
+delimiter ;
+
+delimiter //
+CREATE FUNCTION getManufacturerId(manufacturer_name VARCHAR(30), segment_id int) returns int
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE ID int;
+    select manufacturerId into ID from manufacturers where manufacturerName = manufacturer_name and segmentId = segment_id;
+    return ID;
+END //
+delimiter ;
+
+delimiter //
+CREATE FUNCTION getVariantId(variant_name varchar(30)) returns int
+READS SQL DATA
+DETERMINISTIC
+BEGIN
+	DECLARE ID int;
+    select variantId into ID from variants where variantName = variant_name;
+    return ID;
+END //
+delimiter ;
+
+DELIMITER $$ 
+CREATE PROCEDURE `addVehicle`(
     IN segment_name varchar(30),
     IN manufacturer_name varchar(30),
     IN variant_name varchar(30),
@@ -142,7 +178,7 @@ DELIMITER $$ CREATE PROCEDURE `addVehicle`(
 insert into segments (segmentName)
 values(segment_name);
 END IF;
-IF getManufacturerId(manufacturer_name) IS NULL THEN
+IF getManufacturerId(manufacturer_name, getSegmentId(segment_name)) IS NULL THEN
 insert into manufacturers (manufacturerName, segmentId)
 values(manufacturer_name, getSegmentId(segment_name));
 END IF;
@@ -157,9 +193,11 @@ insert into variants (
 values(
         variant_name,
         unit_price,
-        getManufacturerId(manufacturer_name),
+        getManufacturerId(manufacturer_name, getSegmentId(segment_name)),
         getSegmentId(segment_name),
         image_name
     );
 END IF;
-END $$ DELIMITER;
+END $$
+
+DELIMITER ;

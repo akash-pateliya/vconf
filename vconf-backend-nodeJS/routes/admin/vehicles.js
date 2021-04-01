@@ -56,8 +56,10 @@ router.get("/getSegments", (request, response) => {
     })
 })
 
-router.get("/getManufacturers", (request, response) => {
-    const statement = `select manufacturerName from manufacturers`;
+router.get("/getManufacturers/:name", (request, response) => {
+    const name = request.params.name;
+
+    const statement = `select manufacturerName from manufacturers, segments where manufacturers.segmentId = segments.segmentId and segments.segmentName = '${name}'`;
 
     db.query(statement, (error, data) => {
         response.send(utils.createResult(error, data));

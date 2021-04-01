@@ -23,7 +23,6 @@ export class VehicleAddComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadSegments();
-    this.loadManufacturers();
   }
 
   loadSegments() {
@@ -37,8 +36,9 @@ export class VehicleAddComponent implements OnInit {
     })
   }
 
-  loadManufacturers() {
-    this.service.getManufacturers().subscribe(response => {
+  loadManufacturers(name: string) {
+
+    this.service.getManufacturers(name).subscribe(response => {
       if (response['status'] = 'success') {
         this.manufacturers = response['data'];
       }
@@ -46,6 +46,10 @@ export class VehicleAddComponent implements OnInit {
         this.toastr.error(response['error']);
       }
     })
+  }
+
+  onChangeSelect(value: string){
+    this.loadManufacturers(value);
   }
 
   onAdd() {
@@ -62,7 +66,10 @@ export class VehicleAddComponent implements OnInit {
       this.toastr.warning("PLease enter Unit Price");
     }
     else {
-      this.service.addVehicle(this.segmentName, this.manufacturerName, this.variantName, this.unitPrice, this.image).subscribe(response => {
+
+      //console.log(this.segmentName +" "+ this.manufacturerName +" "+ this.variantName +" "+ this.unitPrice +" "+ this.image)
+      this.service.addVehicle(this.segmentName, this.manufacturerName, this.variantName, this.unitPrice, this.image)
+      .subscribe(response => {
         if (response['status'] == 'success') {
           this.toastr.success("Added Successfully !!");
           this.activeModal.dismiss('ok');
@@ -70,8 +77,9 @@ export class VehicleAddComponent implements OnInit {
         else {
           this.toastr.error(response['error']);
         }
-      })
+      })  
     }
+  
   }
 
   onCancel() {
