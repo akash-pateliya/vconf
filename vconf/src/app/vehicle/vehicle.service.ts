@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -5,5 +6,42 @@ import { Injectable } from '@angular/core';
 })
 export class VehicleService {
 
-  constructor() { }
+  private url = 'http://localhost:4100/vehicles';
+
+  constructor(private http:HttpClient)
+  {
+
+  }
+
+  getSegments(){
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        token: sessionStorage['token']
+      })
+    }
+    
+    return this.http.get(this.url+"/getSegments", httpOptions);
+  }
+
+  getManufacturers(name: string){
+    
+    const httpOptions = {
+      headers: new HttpHeaders({
+        token: sessionStorage['token']
+      })
+    }
+
+    return this.http.get(this.url+"/getManufacturers/"+name, httpOptions);
+  }
+
+  getVariants(name: string){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        token: sessionStorage['token']
+      })
+    }
+
+    return this.http.get(this.url+"/getVariants/"+name, httpOptions);
+  }
 }

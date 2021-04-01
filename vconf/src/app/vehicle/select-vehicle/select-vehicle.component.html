@@ -1,1 +1,25 @@
-<p>select-vehicle works!</p>
+<h3 class="header">Select Vehicle</h3>
+<div #selectFrom class="form">
+    <div class="form-group">
+        <label>Select Segment</label>
+        <select #segment class="form-control"   (change)='onChangeSelect(segment.value)'>
+            <option [value]="segment.segmentName" *ngFor="let segment of segments">{{segment.segmentName}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Select Manufacturer</label>
+        <select #manufacturer class="form-control"   (change)='onChangeManufacturer(manufacturer.value)'>
+            <option [value]="manufacturer.manufacturerName" *ngFor="let manufacturer of manufacturers">{{manufacturer.manufacturerName}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Select Variant</label>
+        <select #variant class="form-control" >
+            <option [value]="variant.variantName" *ngFor="let variant of variants" [(ngModel)] = "variant.variantName" ngDefaultControl>{{variant.variantName}}</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-success" (click) = "onConfirm()">Confirm</button>
+        <button class="btn btn-danger" (click)="onReset()">Reset</button>
+    </div>
+</div>
