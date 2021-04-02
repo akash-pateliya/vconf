@@ -38,4 +38,43 @@ router.get("/getVariants/:segmentName/:manufacturerName", (request, response) =>
     })
 })
 
+router.post("/getVariantId", (request, response) => {
+    const {name} = request.body;
+    const statement = `select variantId from variants where variantName = '${name}'`;
+
+    db.query(statement, (error, data) => {
+        response.send(utils.createResult(error, data));
+    })
+})
+
+router.get("/getSpecifications/:id", (request, response) => {
+    const id = request.params.id;
+
+    const statement = `select * from specifications where variantId = ${id}`;
+
+    db.query(statement, (error, data) => {
+        response.send(utils.createResult(error, data));
+    })
+})
+
+router.get("/getInterior/:id", (request, response) => {
+    const id = request.params.id;
+
+    const statement = `select * from interior where variantId = ${id}`;
+
+    db.query(statement, (error, data) => {
+        response.send(utils.createResult(error, data));
+    })
+})
+
+router.get("/getExterior/:id", (request, response) => {
+    const id = request.params.id;
+
+    const statement = `select * from exterior where variantId = ${id}`;
+
+    db.query(statement, (error, data) => {
+        response.send(utils.createResult(error, data));
+    })
+})
+
 module.exports = router;

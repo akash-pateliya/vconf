@@ -3,6 +3,8 @@ const db = require("../../database");
 const utils = require("../../utils");
 const fs = require("fs");
 const multer = require('multer');
+const { request } = require("http");
+const { response } = require("express");
 const upload = multer({ dest: 'images/' })
 
 const router = express.Router();
@@ -65,5 +67,6 @@ router.get("/getManufacturers/:name", (request, response) => {
         response.send(utils.createResult(error, data));
     })
 })
+
 
 module.exports = router;

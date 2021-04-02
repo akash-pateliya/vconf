@@ -134,6 +134,44 @@ where A.orderId = B.orderId
     and D.variantId = B.variantId
     and B.orderId = 10001;
 
+CREATE TABLE `specifications` (
+	Mileage varchar(25),
+    fuelType enum('Diesel', 'Petrol', 'CNG'),
+    engineDisplacement varchar(10),
+    seatingCapacity varchar(5),
+    transmissionType enum('Manual', 'Automatic', 'Continuously Variable Transmission'),
+    bootSpace varchar(10),
+    fuelTankCapacity varchar(10),
+    serviceCost varchar(10)
+);
+
+CREATE TABLE `interior` (
+	id integer primary key auto_increment,
+    variantId int,
+	leatherSeats boolean default false,
+    leatherSteeringWheel boolean default false,
+    digitalMeter boolean default false,
+    outsideTemperatureDisplay boolean default false,
+    heightAdjustableDriverSeat boolean default false,
+    additionalFeatures varchar(250),
+    FOREIGN KEY (variantId) REFERENCES variants (variantId)
+);
+
+CREATE TABLE `exterior` (
+	id integer primary key auto_increment,
+    variantId int,
+	fogLights boolean default false,
+    powerAdjustableMirror boolean default false,
+    rainSensingWiper boolean default false,
+    wheelCovers boolean default false,
+    alloyWheels boolean default false,
+    sunRoof boolean default false,
+    tyreSize varchar(25),
+    tyreType varchar(50),
+    additionalFeatures varchar(250),
+    FOREIGN KEY (variantId) REFERENCES variants (variantId)
+);
+
 delimiter //
 CREATE FUNCTION getSegmentId(segment_name varchar(30)) returns int
 READS SQL DATA

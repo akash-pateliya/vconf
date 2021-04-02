@@ -18,7 +18,9 @@ export class SelectVehicleComponent implements OnInit {
   @ViewChild('manufacturer') manufacturer;
   @ViewChild('variant') variant;
 
+  manufacturerName = '';
   variantName = '';
+  variantId = 0;
 
   constructor(private service: VehicleService, private toastr: ToastrService, private router:Router) { }
 
@@ -50,6 +52,7 @@ export class SelectVehicleComponent implements OnInit {
 
   onChangeManufacturer(manufacturerName: string, segmentName: string){
 
+    this.manufacturerName = manufacturerName;
     this.service.getVariants(manufacturerName, segmentName).subscribe(response => {
       if(response['status'] == 'success'){
         this.variants = response['data'];
@@ -67,8 +70,12 @@ export class SelectVehicleComponent implements OnInit {
   }
 
   onConfirm(){
-    console.log(this.variantName);
-    this.router.navigate(['/home/vehicle/standard-features'])
+    sessionStorage['manufacturerName'] = this.manufacturerName;    
+    this.service.setVariantName(this.variantName);
+    // this.service.getVariantId(this.variantName).subscribe(response => {
+
+    // })    
+    this.router.navigate(['/home/vehicle/default-configurations'])
   }
 
 }

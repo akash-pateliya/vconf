@@ -14,7 +14,7 @@
     </div>
     <div class="form-group">
         <label>Select Variant</label>
-        <select #variant class="form-control" [(ngModel)] = "variantName" >
+        <select #variant class="form-control" [(ngModel)] = "variantName">
             <option [value]="variant.variantName" *ngFor="let variant of variants">{{variant.variantName}}</option>
         </select>
     </div>
