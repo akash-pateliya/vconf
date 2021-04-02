@@ -24,7 +24,7 @@ export class VehicleService {
     return this.http.get(this.url+"/getSegments", httpOptions);
   }
 
-  getManufacturers(name: string){
+  getManufacturers(name:string){
     
     const httpOptions = {
       headers: new HttpHeaders({
@@ -35,13 +35,13 @@ export class VehicleService {
     return this.http.get(this.url+"/getManufacturers/"+name, httpOptions);
   }
 
-  getVariants(name: string){
+  getVariants(Manufacturername: string, segmentName: string){
     const httpOptions = {
       headers: new HttpHeaders({
         token: sessionStorage['token']
       })
     }
 
-    return this.http.get(this.url+"/getVariants/"+name, httpOptions);
+    return this.http.get(this.url+"/getVariants/"+segmentName+"/"+Manufacturername, httpOptions);
   }
 }

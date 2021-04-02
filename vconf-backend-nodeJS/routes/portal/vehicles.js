@@ -22,10 +22,16 @@ router.get("/getManufacturers/:name", (request, response) => {
     })
 })
 
-router.get("/getVariants/:name", (request, response) => {
-    const name = request.params.name;
+router.get("/getVariants/:segmentName/:manufacturerName", (request, response) => {
+    const segmentName = request.params.segmentName;
+    const manufacturerName = request.params.manufacturerName;
 
-    const statement = `select variantName from variants, manufacturers where manufacturers.manufacturerId = variants.variantId and manufacturers.manufacturerName = '${name}'`;
+    const statement = `select variantName from variants, manufacturers, segments
+	where variants.manufacturerId = manufacturers.manufacturerId
+		and variants.segmentId = manufacturers.segmentId
+        and manufacturers.segmentId = segments.segmentId
+        and manufacturers.manufacturerName = '${manufacturerName}'
+        and segments.segmentName = '${segmentName}'`;
 
     db.query(statement, (error, data) => {
         response.send(utils.createResult(error, data));

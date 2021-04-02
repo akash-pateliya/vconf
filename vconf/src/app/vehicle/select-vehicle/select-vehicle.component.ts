@@ -37,7 +37,7 @@ export class SelectVehicleComponent implements OnInit {
     })
   }
 
-  onChangeSelect(value: string){
+  onChangeSegment(value: string){
     this.service.getManufacturers(value).subscribe(response => {
       if(response['status'] == 'success'){
         this.manufacturers = response['data'];
@@ -48,8 +48,9 @@ export class SelectVehicleComponent implements OnInit {
     })
   }
 
-  onChangeManufacturer(value: string){
-    this.service.getVariants(value).subscribe(response => {
+  onChangeManufacturer(manufacturerName: string, segmentName: string){
+
+    this.service.getVariants(manufacturerName, segmentName).subscribe(response => {
       if(response['status'] == 'success'){
         this.variants = response['data'];
       }
@@ -67,6 +68,7 @@ export class SelectVehicleComponent implements OnInit {
 
   onConfirm(){
     console.log(this.variantName);
+    this.router.navigate(['/home/vehicle/standard-features'])
   }
 
 }

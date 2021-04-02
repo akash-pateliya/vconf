@@ -10,7 +10,6 @@ const router = express.Router();
 router.post("/signin", (request, response) => {
     const { email, password } = request.body;
     const encryptedPassword = crypto.SHA256(password);
-    console.log(encryptedPassword + "")
     const statement = `select userId, username, status from users where email = '${email}' and password = '${encryptedPassword}'`;
 
     db.query(statement, (error, data) => {
@@ -48,7 +47,6 @@ router.post("/signin", (request, response) => {
                 }
             }
         }
-        console.log(result);
         response.send(result);
     });
 });
