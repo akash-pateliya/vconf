@@ -16,6 +16,9 @@ It is a B2B portal using Angular7,Spring Restful API 5, Hibernate 5, Maven 3 and
 ### Integrated Development Environment (IDE) and Tools
 ![alt text](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white) ![alt text](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white) ![alt text](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=Postman&logoColor=white) ![alt text](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white) ![alt text](https://img.shields.io/badge/PowerShell-5391FE?style=for-the-badge&logo=PowerShell&logoColor=white)
 
+## Project Flow
+https://user-images.githubusercontent.com/61374804/130280565-86834ff2-0a15-4bf8-bc92-1ba9ad349e6d.mp4
+
 ### Screenshots
 ![alt text](images/1.png)
 ![alt text](images/2.png)
@@ -26,3 +29,4 @@ It is a B2B portal using Angular7,Spring Restful API 5, Hibernate 5, Maven 3 and
 ![alt text](images/7.png)
 ![alt text](images/8.png)
 ![alt text](images/9.png)
+
